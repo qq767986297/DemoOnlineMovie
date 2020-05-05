@@ -32,6 +32,7 @@ import butterknife.Unbinder;
  * Time: 2020/4/24
  * Author: 王冠华
  * Description:
+ * 1
  */
 public class FragmentDetailComment extends BaseFragment implements IDetailContract.IView {
     @BindView(R.id.rv_fragment_detail_comment)
