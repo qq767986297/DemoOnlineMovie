@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/ll_home_hot_list"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+       >
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/iv_item_hot_list"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="103dp"
+            android:id="@+id/tv_item_hot_list_score"
+            android:layout_centerHorizontal="true"
+            android:text="000"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="14sp"
+        android:id="@+id/tv_item_hot_list_name"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="6dp"/>
+    <Button
+        android:layout_width="45dp"
+        android:layout_height="20dp"
+        android:text="购票"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:id="@+id/bt_item_hot_list"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bt_buy_shape"/>
+</LinearLayout>

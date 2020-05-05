@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:id="@+id/ll_home_hot"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="312dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="24dp"
+            android:id="@+id/iv_item_hot_wid"
+            android:src="@mipmap/ic_launcher"
+
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/tv_item_hot_wid_name"
+            android:layout_marginLeft="24dp"
+            android:text="0000"
+            android:layout_marginTop="100dp"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_item_hot_wid_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_item_hot_wid_score"/>
+        <Button
+            android:layout_width="45dp"
+            android:layout_height="20dp"
+            android:text="购票"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="237dp"
+            android:id="@+id/bt_item_hot"
+            android:textColor="@android:color/white"
+            android:background="@drawable/bt_buy_shape"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="206dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/rv_item_hot"
+            android:layout_height="206dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</LinearLayout>
