@@ -5,6 +5,11 @@ import android.view.View;
 import com.bw.movie.R;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.MineMovieCommentBean;
+import com.bw.movie.bean.MineOrderBean;
+import com.bw.movie.bean.SystemMsgBean;
+import com.bw.movie.bean.SystemMsgChangeBean;
+import com.bw.movie.bean.UserFeedBackBean;
 import com.bw.movie.bean.UserFollowMovieBean;
 import com.bw.movie.contract.IMineContract;
 import com.bw.movie.presenter.MinePresenter;
@@ -37,6 +42,31 @@ public class FragmentMineFollowCinema extends BaseFragment implements IMineContr
 
     @Override
     public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
+
+    }
+
+    @Override
+    public void onUserOrderMovie(MineOrderBean mineOrderBean) {
+
+    }
+
+    @Override
+    public void onUserFeedBack(UserFeedBackBean userFeedBackBean) {
+
+    }
+
+    @Override
+    public void onSystemMsg(SystemMsgBean systemMsgBean) {
+
+    }
+
+    @Override
+    public void onSystemMsgChange(SystemMsgChangeBean systemMsgChangeBean) {
+
+    }
+
+    @Override
+    public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
 
     }
 }

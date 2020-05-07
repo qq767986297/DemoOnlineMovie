@@ -45,7 +45,6 @@ public class DetailNoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         MovieDetailBean.ResultBean.ShortFilmListBean bean = list.get(i);
         String videoUrl = bean.getVideoUrl();
         MediaController controller = new MediaController(context);
-
         Uri uri = Uri.parse(videoUrl);
         ((ViewHolder)viewHolder).vv.setVideoURI(uri);
         controller.setMediaPlayer(((ViewHolder)viewHolder).vv);

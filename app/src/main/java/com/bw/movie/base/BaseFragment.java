@@ -43,7 +43,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         initView(view);
         //控件加载完成
         viewInflateFinshed=true;
-        doCanSee();
+       doCanSee();
+
         return view;
     }
     //判断是否用户可见

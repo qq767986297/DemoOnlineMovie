@@ -1,15 +1,13 @@
-package com.bw.movie.fragment;
+package com.bw.movie.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bw.movie.R;
-import com.bw.movie.adapter.MineFollowMovieAdapter;
-import com.bw.movie.base.BaseFragment;
+import com.bw.movie.adapter.MineOrderAdapter;
+import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
@@ -24,17 +22,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import butterknife.OnClick;
 
-/**
- * Time: 2020/4/28
- * Author: 王冠华
- * Description:
- */
-public class FragmentMineFollowMovie extends BaseFragment implements IMineContract.IView {
-    @BindView(R.id.rv_mine_follow_movie)
+public class MineOrderActivity extends BaseActivity implements IMineContract.IView {
+
+
+    @BindView(R.id.iv_mine_order_back)
+    ImageView iv;
+    @BindView(R.id.rv_mine_order)
     RecyclerView rv;
-    Unbinder unbinder;
 
     @Override
     protected BasePresenter initPresenter() {
@@ -43,34 +39,32 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_mine_follow_movie;
+        return R.layout.activity_mine_order;
     }
 
     @Override
-    protected void initView(View view) {
+    protected void initView() {
 
     }
-
+    @OnClick(R.id.iv_mine_order_back)
+    public void onViewClicked() {
+        finish();
+    }
     @Override
     protected void initData() {
         BasePresenter presenter = getPresenter();
         if (presenter instanceof IMineContract.IPresenter) {
-            ((IMineContract.IPresenter) presenter).getUserFollowMovie(1, 10);
+            ((IMineContract.IPresenter) presenter).getUserOrderMovie();
         }
     }
 
     @Override
-    public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
-        List<UserFollowMovieBean.ResultBean> list = userFollowMovieBean.getResult();
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        MineFollowMovieAdapter adapter = new MineFollowMovieAdapter(getActivity(), list);
-        rv.setLayoutManager(manager);
-        rv.setAdapter(adapter);
-    }
-
-    @Override
     public void onUserOrderMovie(MineOrderBean mineOrderBean) {
-
+        List<MineOrderBean.ResultBean> list = mineOrderBean.getResult();
+        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        rv.setLayoutManager(manager);
+        MineOrderAdapter adapter = new MineOrderAdapter(this, list);
+        rv.setAdapter(adapter);
     }
 
     @Override
@@ -94,16 +88,17 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
+
     }
 
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.bw.movie.utils;
 
 import com.bw.movie.bean.AddMovieCommentBean;
 import com.bw.movie.bean.CancelFollowMovieBean;
+import com.bw.movie.bean.CinemaRecommendBean;
 import com.bw.movie.bean.FollowMovieBean;
 import com.bw.movie.bean.HomeBannerBean;
 import com.bw.movie.bean.HomeHotMovieBean;
@@ -9,12 +10,17 @@ import com.bw.movie.bean.HomeReleaseMovieBean;
 import com.bw.movie.bean.HomeSearchMovieBean;
 import com.bw.movie.bean.HomeSoonMovieBean;
 import com.bw.movie.bean.LoginBean;
+import com.bw.movie.bean.MineMovieCommentBean;
+import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.MovieCommentBean;
 import com.bw.movie.bean.MovieCommentGreatBean;
 import com.bw.movie.bean.MovieDetailBean;
 import com.bw.movie.bean.MovieReserveBean;
 import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.bean.SendEmailCodeBean;
+import com.bw.movie.bean.SystemMsgBean;
+import com.bw.movie.bean.SystemMsgChangeBean;
+import com.bw.movie.bean.UserFeedBackBean;
 import com.bw.movie.bean.UserFollowMovieBean;
 
 import io.reactivex.Observable;
@@ -87,4 +93,22 @@ public interface Apis {
     @POST("movie/v1/verify/movieCommentGreat")
     @FormUrlEncoded
     Observable<MovieCommentGreatBean>getMovieCommentGreat(@Field("commentId")int commentId);
+    //用户预约电影查询
+    @GET("user/v2/verify/findUserReserve")
+    Observable<MineOrderBean>getUserOrder();
+    //用户意见反馈
+    @POST("tool/v1/verify/recordFeedBack")
+    @FormUrlEncoded
+    Observable<UserFeedBackBean>getFeedBack(@Field("content")String content);
+    //系统推送消息
+    @GET("tool/v1/verify/findAllSysMsgList")
+    Observable<SystemMsgBean>getSystemMsg(@Query("page")int page,@Query("count")int count);
+    //系统推送消息状态改变
+    @GET("tool/v1/verify/changeSysMsgStatus")
+    Observable<SystemMsgChangeBean>getSystemMsgChange(@Query("id")int id);
+    //用户电影评论列表
+    @GET("user/v2/verify/findMyMovieCommentList")
+    Observable<MineMovieCommentBean>getMineMovieComment(@Query("page")int page,@Query("count")int count);
+    @GET("cinema/v1/findRecommendCinemas")
+    Observable<CinemaRecommendBean>getCinemaRecommend(@Query("page")int page,@Query("count")int count);
 }

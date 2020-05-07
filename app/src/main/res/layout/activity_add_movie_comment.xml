@@ -69,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="24dp"
         android:textColor="@android:color/white"
+        android:gravity="start"
         android:textSize="14sp"
         android:layout_marginTop="10dp"
         android:id="@+id/et_add_movie_comment_context"

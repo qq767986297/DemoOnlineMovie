@@ -3,12 +3,13 @@ package com.bw.movie.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bw.movie.R;
-import com.bw.movie.adapter.MineFollowMovieAdapter;
+import com.bw.movie.adapter.MineMovieCommentAdapter;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.bean.MineMovieCommentBean;
@@ -27,12 +28,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time: 2020/4/28
+ * Time: 2020/5/6
  * Author: 王冠华
  * Description:
  */
-public class FragmentMineFollowMovie extends BaseFragment implements IMineContract.IView {
-    @BindView(R.id.rv_mine_follow_movie)
+public class FragmentMineCommentMovie extends BaseFragment implements IMineContract.IView {
+    @BindView(R.id.rv_fragment_mine_comment_movie)
     RecyclerView rv;
     Unbinder unbinder;
 
@@ -43,7 +44,7 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_mine_follow_movie;
+        return R.layout.fragment_mine_comment_movie;
     }
 
     @Override
@@ -54,18 +55,24 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
     @Override
     protected void initData() {
         BasePresenter presenter = getPresenter();
-        if (presenter instanceof IMineContract.IPresenter) {
-            ((IMineContract.IPresenter) presenter).getUserFollowMovie(1, 10);
+        if(presenter instanceof IMineContract.IPresenter){
+            ((IMineContract.IPresenter)presenter).getUserMovieComment(1,5);
         }
     }
 
     @Override
-    public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
-        List<UserFollowMovieBean.ResultBean> list = userFollowMovieBean.getResult();
+    public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
+        Log.i("xxx","V层");
+        List<MineMovieCommentBean.ResultBean> list = mineMovieCommentBean.getResult();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        MineFollowMovieAdapter adapter = new MineFollowMovieAdapter(getActivity(), list);
+        MineMovieCommentAdapter adapter = new MineMovieCommentAdapter(getActivity(), list);
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
+
     }
 
     @Override
@@ -88,10 +95,6 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
 
     }
 
-    @Override
-    public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -78,6 +78,7 @@ public class FragmentDetailComment extends BaseFragment implements IDetailContra
                 BasePresenter presenter = getPresenter();
                 if (presenter instanceof IDetailContract.IPresenter){
                     ((IDetailContract.IPresenter)presenter).getMovieCommentGreat(i);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -88,7 +89,7 @@ public class FragmentDetailComment extends BaseFragment implements IDetailContra
         String message = movieCommentGreatBean.getMessage();
        if(message.equals("点赞成功")){
            Toast.makeText(getActivity(), "点赞成功", Toast.LENGTH_SHORT).show();
-           adapter.notifyDataSetChanged();
+
        }else {
            Toast.makeText(getActivity(), "不能重复点赞", Toast.LENGTH_SHORT).show();
        }

@@ -23,6 +23,8 @@ import com.bw.movie.utils.RetrofiManger;
 import com.bw.movie.utils.SPUtils;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,6 +119,14 @@ public class LoginActivity extends BaseActivity implements ILoginContract.ILogin
     public void onLoginSuccess(LoginBean loginBean) {
         String message = loginBean.getMessage();
         LoginBean.ResultBean result = loginBean.getResult();
+        LoginBean.ResultBean.UserInfoBean userInfo = result.getUserInfo();
+        String headPic = userInfo.getHeadPic();
+        String nickName = userInfo.getNickName();
+        int sex = userInfo.getSex();
+        String email = userInfo.getEmail();
+        EventBus.getDefault().postSticky(loginBean);
+        SPUtils.putString(this,"userInfo","NickName",nickName);
+        SPUtils.putString(this,"userInfo","headPic",headPic);
         if(message.equals("登陆成功")){
             int userId = result.getUserId();
             String sessionId = result.getSessionId();

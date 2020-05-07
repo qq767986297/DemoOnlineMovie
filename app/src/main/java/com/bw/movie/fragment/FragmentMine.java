@@ -1,17 +1,31 @@
 package com.bw.movie.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bw.movie.R;
+import com.bw.movie.activity.MineCommentActivity;
 import com.bw.movie.activity.MineFollowActivity;
+import com.bw.movie.activity.MineOrderActivity;
+import com.bw.movie.activity.SystemMsgActivity;
+import com.bw.movie.activity.UserFeedBackActivity;
+import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.LoginBean;
+import com.bw.movie.utils.SPUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +57,12 @@ public class FragmentMine extends BaseFragment {
     @BindView(R.id.iv_mine_setting)
     ImageView ivMineSetting;
     Unbinder unbinder;
+    @BindView(R.id.iv_mine_head)
+    SimpleDraweeView ivMineHead;
+    @BindView(R.id.tv_mine_name)
+    TextView tvMineName;
+    @BindView(R.id.iv_mine_systemmsg)
+    ImageView ivMineSystemmsg;
 
     @Override
     protected BasePresenter initPresenter() {
@@ -60,7 +80,26 @@ public class FragmentMine extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+    public void init(LoginBean loginBean){
+        LoginBean.ResultBean result = loginBean.getResult();
+        LoginBean.ResultBean.UserInfoBean userInfo = result.getUserInfo();
+        String headPic = userInfo.getHeadPic();
+        String nickName = userInfo.getNickName();
+        Uri uri = Uri.parse(headPic);
+        ivMineHead.setImageURI(uri);
+        tvMineName.setText(nickName);
+
+    }
+    @Override
     protected void initData() {
+
 
     }
 
@@ -79,10 +118,12 @@ public class FragmentMine extends BaseFragment {
     }
 
     @OnClick({R.id.iv_mine_userinfo, R.id.ticket, R.id.iv_mine_follow, R.id.iv_mine_order, R.id.iv_mine_record,
-            R.id.iv_mine_history, R.id.iv_mine_comment, R.id.iv_mine_idea, R.id.iv_mine_setting})
+            R.id.iv_mine_history, R.id.iv_mine_comment, R.id.iv_mine_idea, R.id.iv_mine_setting,R.id.iv_mine_systemmsg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_userinfo:
+                Intent intentInfo = new Intent(getActivity(), UserInfoActivity.class);
+                startActivity(intentInfo);
                 break;
             case R.id.ticket:
                 break;
@@ -91,19 +132,35 @@ public class FragmentMine extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.iv_mine_order:
+                Intent intent2 = new Intent(getActivity(), MineOrderActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.iv_mine_record:
                 break;
             case R.id.iv_mine_history:
                 break;
             case R.id.iv_mine_comment:
+                Intent intentMineComment = new Intent(getActivity(), MineCommentActivity.class);
+                startActivity(intentMineComment);
                 break;
             case R.id.iv_mine_idea:
+                Intent intentFeedBack = new Intent(getActivity(), UserFeedBackActivity.class);
+                startActivity(intentFeedBack);
                 break;
             case R.id.iv_mine_setting:
                 break;
-                default:
-                    break;
+            case R.id.iv_mine_systemmsg:
+                Intent intentSystem = new Intent(getActivity(), SystemMsgActivity.class);
+                startActivity(intentSystem);
+                break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

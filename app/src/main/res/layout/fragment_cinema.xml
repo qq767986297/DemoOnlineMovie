@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#141931"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="24dp"
+          android:layout_marginTop="17dp"
+          android:layout_marginLeft="26dp"
+          android:id="@+id/iv_cinema_location"
+          android:src="@mipmap/icon_location"/>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@android:color/white"
+          android:id="@+id/tv_cinema_location"
+          android:text="北京"
+          android:layout_toRightOf="@id/iv_cinema_location"
+          android:layout_marginTop="19dp"
+          android:layout_marginLeft="13dp"
+          android:textSize="14sp"/>
+      <ImageView
+          android:layout_width="18dp"
+          android:layout_height="18dp"
+          android:src="@mipmap/icon_search"
+          android:layout_marginTop="17dp"
+          android:id="@+id/iv_cinema_serach"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="27.5dp"/>
+      <EditText
+          android:layout_width="230dp"
+          android:layout_height="30dp"
+          android:textSize="12sp"
+          android:visibility="invisible"
+          android:id="@+id/et_cinema"
+          android:layout_toLeftOf="@id/iv_cinema_serach"
+          android:layout_marginTop="14dp"
+          android:layout_marginLeft="106dp"
+          android:hint=" 请输入影院名称"
+          android:textColor="@android:color/darker_gray"
+          android:background="@drawable/home_search"/>
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="#1C2243"
+        app:tabTextColor="@android:color/white"
+        android:id="@+id/tb_cinema"
+        android:layout_below="@id/iv_cinema_serach"
+        android:layout_marginTop="22dp"></android.support.design.widget.TabLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/tb_cinema">
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/vp_cinema"
+        ></android.support.v4.view.ViewPager>
+    </LinearLayout>
+</RelativeLayout>

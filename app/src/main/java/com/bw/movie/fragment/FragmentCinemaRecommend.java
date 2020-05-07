@@ -8,17 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bw.movie.R;
-import com.bw.movie.adapter.MineFollowMovieAdapter;
+import com.bw.movie.adapter.CinemaRecommendAdapter;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
-import com.bw.movie.bean.MineMovieCommentBean;
-import com.bw.movie.bean.MineOrderBean;
-import com.bw.movie.bean.SystemMsgBean;
-import com.bw.movie.bean.SystemMsgChangeBean;
-import com.bw.movie.bean.UserFeedBackBean;
-import com.bw.movie.bean.UserFollowMovieBean;
-import com.bw.movie.contract.IMineContract;
-import com.bw.movie.presenter.MinePresenter;
+import com.bw.movie.bean.CinemaRecommendBean;
+import com.bw.movie.contract.ICinemaContract;
+import com.bw.movie.presenter.CinemaPresenter;
 
 import java.util.List;
 
@@ -27,23 +22,23 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time: 2020/4/28
+ * Time: 2020/5/6
  * Author: 王冠华
  * Description:
  */
-public class FragmentMineFollowMovie extends BaseFragment implements IMineContract.IView {
-    @BindView(R.id.rv_mine_follow_movie)
+public class FragmentCinemaRecommend extends BaseFragment implements ICinemaContract.IView {
+    @BindView(R.id.rv_cinema_recommend)
     RecyclerView rv;
     Unbinder unbinder;
 
     @Override
     protected BasePresenter initPresenter() {
-        return new MinePresenter(this);
+        return new CinemaPresenter(this);
     }
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_mine_follow_movie;
+        return R.layout.fragment_cinema_recommend;
     }
 
     @Override
@@ -54,42 +49,18 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
     @Override
     protected void initData() {
         BasePresenter presenter = getPresenter();
-        if (presenter instanceof IMineContract.IPresenter) {
-            ((IMineContract.IPresenter) presenter).getUserFollowMovie(1, 10);
+        if (presenter instanceof ICinemaContract.IPresenter) {
+            ((ICinemaContract.IPresenter) presenter).getCinemaRecommend(1, 10);
         }
     }
 
     @Override
-    public void onUserFollowMovie(UserFollowMovieBean userFollowMovieBean) {
-        List<UserFollowMovieBean.ResultBean> list = userFollowMovieBean.getResult();
+    public void onCinemaRecommend(CinemaRecommendBean cinemaRecommendBean) {
+        List<CinemaRecommendBean.ResultBean> list = cinemaRecommendBean.getResult();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        MineFollowMovieAdapter adapter = new MineFollowMovieAdapter(getActivity(), list);
+        CinemaRecommendAdapter adapter = new CinemaRecommendAdapter(getActivity(), list);
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
-    }
-
-    @Override
-    public void onUserOrderMovie(MineOrderBean mineOrderBean) {
-
-    }
-
-    @Override
-    public void onUserFeedBack(UserFeedBackBean userFeedBackBean) {
-
-    }
-
-    @Override
-    public void onSystemMsg(SystemMsgBean systemMsgBean) {
-
-    }
-
-    @Override
-    public void onSystemMsgChange(SystemMsgChangeBean systemMsgChangeBean) {
-
-    }
-
-    @Override
-    public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
 
     }
 
