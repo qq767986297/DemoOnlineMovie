@@ -29,6 +29,7 @@ import butterknife.Unbinder;
  * Time: 2020/4/20
  * Author: 王冠华
  * Description:
+ * a
  */
 public class FragmentCinema extends BaseFragment {
     ArrayList<String> data = new ArrayList<>();
