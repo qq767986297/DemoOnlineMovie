@@ -47,14 +47,23 @@
         android:layout_marginLeft="20dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"/>
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:numStars="5"
-        android:layout_marginTop="14dp"
+    <com.bw.movie.custom.RatingBar
         android:id="@+id/rb_add_movie_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-        android:layout_below="@id/tv_add_movie_comment_score"/>
+        android:layout_below="@id/tv_add_movie_comment_score"
+        app:starCount="5"
+        android:layout_marginTop="15dp"
+        app:starEmpty="@mipmap/x1"
+        app:starFill="@mipmap/x3"
+        app:starHalf="@mipmap/x2"
+        app:starImageSize="16dp"
+        app:starPadding="6dp"
+        app:starStep="1.5"
+        app:stepSize="Half">
+    </com.bw.movie.custom.RatingBar>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

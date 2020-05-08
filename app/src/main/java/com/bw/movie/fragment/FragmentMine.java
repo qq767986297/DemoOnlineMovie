@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bw.movie.R;
 import com.bw.movie.activity.MineCommentActivity;
 import com.bw.movie.activity.MineFollowActivity;
@@ -19,13 +20,12 @@ import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
-import com.bw.movie.bean.LoginBean;
 import com.bw.movie.utils.SPUtils;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,13 +57,12 @@ public class FragmentMine extends BaseFragment {
     @BindView(R.id.iv_mine_setting)
     ImageView ivMineSetting;
     Unbinder unbinder;
-    @BindView(R.id.iv_mine_head)
-    SimpleDraweeView ivMineHead;
     @BindView(R.id.tv_mine_name)
     TextView tvMineName;
     @BindView(R.id.iv_mine_systemmsg)
     ImageView ivMineSystemmsg;
-
+    @BindView(R.id.iv_mine_head)
+    SimpleDraweeView ivMineHead;
     @Override
     protected BasePresenter initPresenter() {
         return null;
@@ -82,25 +81,32 @@ public class FragmentMine extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(!EventBus.getDefault().isRegistered(this)){
-            EventBus.getDefault().register(this);
-        }
+//        if(!EventBus.getDefault().isRegistered(this)){
+//            EventBus.getDefault().register(this);
+//        }
     }
-    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
-    public void init(LoginBean loginBean){
-        LoginBean.ResultBean result = loginBean.getResult();
-        LoginBean.ResultBean.UserInfoBean userInfo = result.getUserInfo();
-        String headPic = userInfo.getHeadPic();
-        String nickName = userInfo.getNickName();
-        Uri uri = Uri.parse(headPic);
-        ivMineHead.setImageURI(uri);
-        tvMineName.setText(nickName);
 
-    }
+    //    @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
+//    public void init(LoginBean loginBean){
+//        LoginBean.ResultBean result = loginBean.getResult();
+//        LoginBean.ResultBean.UserInfoBean userInfo = result.getUserInfo();
+//        String headPic = userInfo.getHeadPic();
+//        String nickName = userInfo.getNickName();
+//        Uri uri = Uri.parse(headPic);
+//        ivMineHead.setImageURI(uri);
+//        tvMineName.setText(nickName);
+//
+//    }
     @Override
     protected void initData() {
-
-
+        String name = SPUtils.getString(getActivity(), "login", "NickName");
+        String head = SPUtils.getString(getActivity(), "login", "headPic");
+        Uri uri = Uri.parse(head);
+        ImageRequest build = ImageRequestBuilder.newBuilderWithSource(uri)
+                .setProgressiveRenderingEnabled(true).build();
+        AbstractDraweeController build1 = Fresco.newDraweeControllerBuilder().setImageRequest(build).build();
+        ivMineHead.setController(build1);
+        tvMineName.setText(name);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class FragmentMine extends BaseFragment {
     }
 
     @OnClick({R.id.iv_mine_userinfo, R.id.ticket, R.id.iv_mine_follow, R.id.iv_mine_order, R.id.iv_mine_record,
-            R.id.iv_mine_history, R.id.iv_mine_comment, R.id.iv_mine_idea, R.id.iv_mine_setting,R.id.iv_mine_systemmsg})
+            R.id.iv_mine_history, R.id.iv_mine_comment, R.id.iv_mine_idea, R.id.iv_mine_setting, R.id.iv_mine_systemmsg})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_mine_userinfo:
@@ -161,6 +167,6 @@ public class FragmentMine extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }

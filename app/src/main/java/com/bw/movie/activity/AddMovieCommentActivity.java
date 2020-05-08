@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +14,7 @@ import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.bean.AddMovieCommentBean;
 import com.bw.movie.contract.IAddContract;
+import com.bw.movie.custom.RatingBar;
 import com.bw.movie.presenter.AddPresenter;
 
 import butterknife.BindView;
@@ -30,14 +30,17 @@ public class AddMovieCommentActivity extends BaseActivity implements IAddContrac
     TextView name;
     @BindView(R.id.tv_add_movie_comment_score)
     TextView score;
-    @BindView(R.id.rb_add_movie_comment)
-    RatingBar rb;
+    //    @BindView(R.id.rb_add_movie_comment)
+//    RatingBar rb;
     @BindView(R.id.et_add_movie_comment_context)
     EditText context;
     @BindView(R.id.bt_add_movie_comment)
     Button bt;
+    @BindView(R.id.rb_add_movie_comment)
+    com.bw.movie.custom.RatingBar rb;
     private int movieId;
     private String et;
+    private float rb_score = 0;
 
     @Override
     protected BasePresenter initPresenter() {
@@ -59,9 +62,15 @@ public class AddMovieCommentActivity extends BaseActivity implements IAddContrac
         Intent intent = getIntent();
         movieId = intent.getIntExtra("movieId", 0);
         String movieName = intent.getStringExtra("name");
-
         name.setText(movieName);
+        rb.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+            @Override
+            public void onRatingChange(float ratingCount) {
+                rb_score=ratingCount;
+            }
+        });
     }
+
     @OnClick({R.id.iv_addmoviecomment_back, R.id.bt_add_movie_comment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -70,27 +79,28 @@ public class AddMovieCommentActivity extends BaseActivity implements IAddContrac
                 break;
             case R.id.bt_add_movie_comment:
                 et = context.getText().toString();
-              if(et!=null){
-                  BasePresenter presenter = getPresenter();
-                  if(presenter instanceof IAddContract.IPresenter){
-                      ((IAddContract.IPresenter)presenter).getAddMovieComment(movieId,et,5.0);
-                  }
-              }else {
-                  Toast.makeText(this, "评论内容不能为空哦", Toast.LENGTH_SHORT).show();
-              }
+                if (et != null) {
+                    BasePresenter presenter = getPresenter();
+                    if (presenter instanceof IAddContract.IPresenter) {
+                        ((IAddContract.IPresenter) presenter).getAddMovieComment(movieId, et, rb_score);
+                    }
+                } else {
+                    Toast.makeText(this, "评论内容不能为空哦", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
         }
     }
+
     @Override
     public void onAddMovieComment(AddMovieCommentBean addMovieCommentBean) {
         String message = addMovieCommentBean.getMessage();
-        if(message.equals("评论成功")){
+        if (message.equals("评论成功")) {
             Toast.makeText(this, "评论成功", Toast.LENGTH_SHORT).show();
             finish();
-        }else {
-            Toast.makeText(this, "评论失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "您已经评论过了", Toast.LENGTH_SHORT).show();
         }
     }
 

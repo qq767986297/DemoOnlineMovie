@@ -28,6 +28,8 @@ import butterknife.ButterKnife;
 public class MineMovieCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<MineMovieCommentBean.ResultBean> list;
+
+
     public MineMovieCommentAdapter(Context context, List<MineMovieCommentBean.ResultBean> list) {
         this.context = context;
         this.list = list;
@@ -55,12 +57,10 @@ public class MineMovieCommentAdapter extends RecyclerView.Adapter<RecyclerView.V
         ((ViewHolder) viewHolder).scroe.setText("评分:" + score + "分");
         ((ViewHolder) viewHolder).director.setText("导演:" + director);
         ((ViewHolder) viewHolder).star.setText("主演:" + starring);
-        ((ViewHolder) viewHolder).rb.setRating(score);
         Uri uri = Uri.parse(imageUrl);
         ((ViewHolder) viewHolder).iv.setImageURI(uri);
         ((ViewHolder) viewHolder).content.setText(myCommentContent);
-        float stepSize = ((ViewHolder) viewHolder).rb.getStepSize();
-        ((ViewHolder) viewHolder).rbScore.setText("("+stepSize+")分");
+        ((ViewHolder) viewHolder).rbScore.setText("(" + score + ")分");
         Date date = new Date(times);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String format = simpleDateFormat.format(date);
@@ -86,14 +86,15 @@ public class MineMovieCommentAdapter extends RecyclerView.Adapter<RecyclerView.V
         @BindView(R.id.tv_item_mine_comment_movie_content)
         TextView content;
         @BindView(R.id.rb_item_mine_movie)
-        RatingBar rb;
+        com.bw.movie.custom.RatingBar rb;
         @BindView(R.id.tv_item_mine_comment_movie_time)
         TextView time;
         @BindView(R.id.tv_rb_item_mine_comment_movie_rb_score)
         TextView rbScore;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

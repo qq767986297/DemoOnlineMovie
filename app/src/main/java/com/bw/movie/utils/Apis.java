@@ -2,7 +2,17 @@ package com.bw.movie.utils;
 
 import com.bw.movie.bean.AddMovieCommentBean;
 import com.bw.movie.bean.CancelFollowMovieBean;
+import com.bw.movie.bean.CinemaCanelFollowBean;
+import com.bw.movie.bean.CinemaCommentGoodBean;
+import com.bw.movie.bean.CinemaDetailBean;
+import com.bw.movie.bean.CinemaDetailCommentBean;
+import com.bw.movie.bean.CinemaFollowBean;
+import com.bw.movie.bean.CinemaLinkBean;
+import com.bw.movie.bean.CinemaNearbyBean;
 import com.bw.movie.bean.CinemaRecommendBean;
+import com.bw.movie.bean.CinemaRegionBean;
+import com.bw.movie.bean.CinemaScheduleListBean;
+import com.bw.movie.bean.FindDataBean;
 import com.bw.movie.bean.FollowMovieBean;
 import com.bw.movie.bean.HomeBannerBean;
 import com.bw.movie.bean.HomeHotMovieBean;
@@ -109,6 +119,39 @@ public interface Apis {
     //用户电影评论列表
     @GET("user/v2/verify/findMyMovieCommentList")
     Observable<MineMovieCommentBean>getMineMovieComment(@Query("page")int page,@Query("count")int count);
+    //推荐影院
     @GET("cinema/v1/findRecommendCinemas")
     Observable<CinemaRecommendBean>getCinemaRecommend(@Query("page")int page,@Query("count")int count);
+    //附近影院
+    @GET("cinema/v1/findNearbyCinemas")
+    Observable<CinemaNearbyBean>getCinemaNearby(@Query("longitude")String longitude,@Query("latitude")String latitude,@Query("page")int page,@Query("count")int count);
+    //影院地区
+    @GET("tool/v2/findRegionList")
+    Observable<CinemaRegionBean>getCinemaRegion();
+    //影院地区
+    @GET("cinema/v2/findCinemaByRegion")
+    Observable<CinemaLinkBean>getCinemaLink(@Query("regionId")int regionId);
+    //影院详情页
+    @GET("cinema/v1/findCinemaInfo")
+    Observable<CinemaDetailBean>getCinemaDetail(@Query("cinemaId")int cinemaId);
+    //影院详情页评论列表
+    @GET("cinema/v1/findAllCinemaComment")
+    Observable<CinemaDetailCommentBean>getCinemaDetailComment(@Query("cinemaId")int cinemaId,@Query("page")int page,@Query("count")int count);
+    //影院关注
+    @GET("cinema/v1/verify/followCinema")
+    Observable<CinemaFollowBean>getCinemaFollow(@Query("cinemaId")int cinemaId);
+    //影院取消关注
+    @GET("cinema/v1/verify/cancelFollowCinema")
+    Observable<CinemaCanelFollowBean>getCinemaCanelFollow(@Query("cinemaId")int cinemaId);
+    //影院评论点赞
+    @POST("cinema/v1/verify/cinemaCommentGreat")
+    @FormUrlEncoded
+    Observable<CinemaCommentGoodBean>getCinemaGood(@Field("commentId")int commentId);
+    //查询电影院下排期
+    @GET("cinema/v2/findCinemaScheduleList")
+    Observable<CinemaScheduleListBean>getCinemaSchedu(@Query("cinemaId")int cinemaId,@Query("page")int page,@Query("count")int count);
+    //查询一周排期时间
+    @GET("movieApi/tool/v2/findDateList")
+    Observable<FindDataBean>getFindData();
+
 }

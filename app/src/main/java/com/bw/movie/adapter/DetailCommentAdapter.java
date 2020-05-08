@@ -53,6 +53,7 @@ public class DetailCommentAdapter extends RecyclerView.Adapter<RecyclerView.View
         long commentTime = bean.getCommentTime();
         String userName = bean.getCommentUserName();
         final double score = bean.getScore();
+        float f=(float)score;
         int greatNum = bean.getGreatNum();
         int replyNum = bean.getReplyNum();
 

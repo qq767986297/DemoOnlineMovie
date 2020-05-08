@@ -43,8 +43,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         initView(view);
         //控件加载完成
         viewInflateFinshed=true;
-       doCanSee();
-
+        initData();
+//       doCanSee();
         return view;
     }
     //判断是否用户可见
@@ -54,15 +54,15 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        //如果还没加载过数据并且用户切换到此fragment
-        if(viewInflateFinshed&&isVisibleToUser){
-            //加载数据
-            initData();
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        //如果还没加载过数据并且用户切换到此fragment
+//        if(viewInflateFinshed&&isVisibleToUser){
+//            //加载数据
+//            initData();
+//        }
+//    }
 
     public P getPresenter() {
         return presenter;

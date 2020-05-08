@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.utils.SPUtils;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,8 @@ public class FragmentCinema extends BaseFragment {
         list.add(new FragmentCinemaRecommend());
         list.add(new FragmentCinemaNearby());
         list.add(new FragmentCinemaLink());
-
+        String city = SPUtils.getString(getActivity(), "city", "city");
+        tvCinemaLocation.setText(city);
         data.add("推荐影院");
         data.add("附近影院");
         data.add("海淀区▼");
@@ -96,11 +98,24 @@ public class FragmentCinema extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.iv_cinema_serach)
-    public void onViewClicked() {
-        etCinema.setVisibility(View.VISIBLE);
-        ivCinemaSerach.setVisibility(View.INVISIBLE);
+    @OnClick({R.id.iv_cinema_serach, R.id.et_cinema})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_cinema_serach:
+                etCinema.setVisibility(View.VISIBLE);
+                ivCinemaSerach.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.et_cinema:
+//                String str = etCinema.getText().toString();
+//                if(str!=null){
+//
+//                }
+                break;
+                default:
+                    break;
+        }
     }
+
 
     public class MyViewPager extends FragmentPagerAdapter {
         public MyViewPager(FragmentManager fm) {

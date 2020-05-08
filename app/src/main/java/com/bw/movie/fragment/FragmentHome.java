@@ -42,6 +42,7 @@ import com.bw.movie.bean.MovieReserveBean;
 import com.bw.movie.contract.HomeContract;
 import com.bw.movie.presenter.HomePresenter;
 import com.bw.movie.utils.RetrofiManger;
+import com.bw.movie.utils.SPUtils;
 import com.stx.xhb.xbanner.XBanner;
 
 import org.greenrobot.eventbus.EventBus;
@@ -388,6 +389,7 @@ public class FragmentHome extends BaseFragment implements HomeContract.IHomeView
                     city = aMapLocation.getCity();
                     //Toast.makeText(getContext(), ""+city1+"11", Toast.LENGTH_SHORT).show();
                     tvHomeLocation.setText(city + "");
+                    SPUtils.putString(getActivity(),"city","city",city);
                     isFirstLoc = false;
                 }
             } else {

@@ -7,5 +7,27 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <!--<declare-styleable name="RatingBar">-->
+        <!--&lt;!&ndash;尺寸值&ndash;&gt;-->
+        <!--<attr name="starImageSize" format="dimension" />-->
+        <!--&lt;!&ndash;星星间距&ndash;&gt;-->
+        <!--<attr name="starPadding" format="dimension" />-->
+        <!--&lt;!&ndash;星星总数&ndash;&gt;-->
+        <!--<attr name="starCount" format="integer" />-->
+        <!--&lt;!&ndash;空白的星星资源文件值&ndash;&gt;-->
+        <!--<attr name="starEmpty" format="reference" />-->
+        <!--&lt;!&ndash;满星资源文件值&ndash;&gt;-->
+        <!--<attr name="starFill" format="reference" />-->
+        <!--&lt;!&ndash;半星资源文件值&ndash;&gt;-->
+        <!--<attr name="starHalf" format="reference" />-->
+        <!--&lt;!&ndash;是否可点击boolean值&ndash;&gt;-->
+        <!--<attr name="clickable" format="boolean" />-->
+        <!--&lt;!&ndash;当前进度float值&ndash;&gt;-->
+        <!--<attr name="starStep" format="float" />-->
+        <!--&lt;!&ndash;每次进度方式的值，整星还是半星&ndash;&gt;-->
+        <!--<attr name="stepSize">-->
+            <!--<enum name="Half" value="0" />-->
+            <!--<enum name="Full" value="1" />-->
+        <!--</attr>-->
+    <!--</declare-styleable>-->
 </resources>

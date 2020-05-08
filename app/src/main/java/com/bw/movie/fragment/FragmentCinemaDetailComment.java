@@ -1,16 +1,15 @@
 package com.bw.movie.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bw.movie.R;
-import com.bw.movie.activity.CinemaDetailActivity;
-import com.bw.movie.adapter.CinemaRecommendAdapter;
+import com.bw.movie.adapter.CinemaDetailCommentAdapter;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.bean.CinemaCanelFollowBean;
@@ -26,6 +25,7 @@ import com.bw.movie.bean.CinemaScheduleListBean;
 import com.bw.movie.bean.FindDataBean;
 import com.bw.movie.contract.ICinemaContract;
 import com.bw.movie.presenter.CinemaPresenter;
+import com.bw.movie.utils.SPUtils;
 
 import java.util.List;
 
@@ -34,12 +34,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Time: 2020/5/6
+ * Time: 2020/5/8
  * Author: 王冠华
  * Description:
  */
-public class FragmentCinemaRecommend extends BaseFragment implements ICinemaContract.IView {
-    @BindView(R.id.rv_cinema_recommend)
+public class FragmentCinemaDetailComment extends BaseFragment implements ICinemaContract.IView {
+    @BindView(R.id.rv_fragment_detail_comment)
     RecyclerView rv;
     Unbinder unbinder;
 
@@ -50,7 +50,7 @@ public class FragmentCinemaRecommend extends BaseFragment implements ICinemaCont
 
     @Override
     protected int getLayout() {
-        return R.layout.fragment_cinema_recommend;
+        return R.layout.fragment_cinema_comment;
     }
 
     @Override
@@ -62,25 +62,48 @@ public class FragmentCinemaRecommend extends BaseFragment implements ICinemaCont
     protected void initData() {
         BasePresenter presenter = getPresenter();
         if (presenter instanceof ICinemaContract.IPresenter) {
-            ((ICinemaContract.IPresenter) presenter).getCinemaRecommend(1, 10);
+            int cinemaId = SPUtils.getInt(getActivity(), "cinemaId", "cinemaId");
+            ((ICinemaContract.IPresenter) presenter).getCinemaDetailComment(cinemaId, 1, 10);
         }
     }
 
     @Override
-    public void onCinemaRecommend(CinemaRecommendBean cinemaRecommendBean) {
-        List<CinemaRecommendBean.ResultBean> list = cinemaRecommendBean.getResult();
+    public void onCinemaDetailComment(CinemaDetailCommentBean cinemaDetailCommentBean) {
+        List<CinemaDetailCommentBean.ResultBean> list = cinemaDetailCommentBean.getResult();
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
-        CinemaRecommendAdapter adapter = new CinemaRecommendAdapter(getActivity(), list);
+        final CinemaDetailCommentAdapter adapter = new CinemaDetailCommentAdapter(getActivity(), list);
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
-        adapter.Click(new CinemaRecommendAdapter.onClick() {
+        adapter.Click(new CinemaDetailCommentAdapter.onClick() {
             @Override
-            public void setOnClick(int cinemaId) {
-                Intent intent = new Intent(getActivity(), CinemaDetailActivity.class);
-                intent.putExtra("cinemaId",cinemaId);
-                startActivity(intent);
+            public void setOnClick(int commentId) {
+                BasePresenter presenter = getPresenter();
+                if (presenter instanceof ICinemaContract.IPresenter) {
+                    ((ICinemaContract.IPresenter) presenter).getCinemaCommentGood(commentId);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
+    }
+    @Override
+    public void onCinemaCommentGood(CinemaCommentGoodBean cinemaCommentGoodBean) {
+        String message = cinemaCommentGoodBean.getMessage();
+        Toast.makeText(getActivity(), "" + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCinemaSchedu(CinemaScheduleListBean cinemaScheduleListBean) {
+
+    }
+
+    @Override
+    public void onCinemaData(FindDataBean findDataBean) {
+
+    }
+
+    @Override
+    public void onCinemaRecommend(CinemaRecommendBean cinemaRecommendBean) {
+
     }
 
     @Override
@@ -103,10 +126,6 @@ public class FragmentCinemaRecommend extends BaseFragment implements ICinemaCont
 
     }
 
-    @Override
-    public void onCinemaDetailComment(CinemaDetailCommentBean cinemaDetailCommentBean) {
-
-    }
 
     @Override
     public void onCinemaFollow(CinemaFollowBean cinemaFollowBean) {
@@ -118,20 +137,7 @@ public class FragmentCinemaRecommend extends BaseFragment implements ICinemaCont
 
     }
 
-    @Override
-    public void onCinemaCommentGood(CinemaCommentGoodBean cinemaCommentGoodBean) {
 
-    }
-
-    @Override
-    public void onCinemaSchedu(CinemaScheduleListBean cinemaScheduleListBean) {
-
-    }
-
-    @Override
-    public void onCinemaData(FindDataBean findDataBean) {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

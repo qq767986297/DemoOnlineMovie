@@ -125,11 +125,12 @@ public class LoginActivity extends BaseActivity implements ILoginContract.ILogin
         int sex = userInfo.getSex();
         String email = userInfo.getEmail();
         EventBus.getDefault().postSticky(loginBean);
-        SPUtils.putString(this,"userInfo","NickName",nickName);
-        SPUtils.putString(this,"userInfo","headPic",headPic);
+
         if(message.equals("登陆成功")){
             int userId = result.getUserId();
             String sessionId = result.getSessionId();
+            SPUtils.putString(this,"login","NickName",nickName);
+            SPUtils.putString(this,"login","headPic",headPic);
             SPUtils.putString(this,"login","userId",userId+"");
             SPUtils.putString(this,"login","sessionId",sessionId+"");
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
