@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.base.IBaseView;
+import com.bw.movie.bean.FindNewVersionBean;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.SystemMsgBean;
@@ -112,6 +113,21 @@ public class MinePresenter extends BasePresenter implements IMineContract.IPrese
                     Log.i("TTT","M层");
                     IMineContract.IView iView= (IMineContract.IView) view;
                     iView.onUserMovieComment(mineMovieCommentBean);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getFindNewVersion() {
+        model.onGetFindNewVersion(new IMineContract.IModel.IFindNewVersionCallBack() {
+            @Override
+            public void onFindNewVersion(FindNewVersionBean findNewVersionBean) {
+                IBaseView view = getView();
+                if(view instanceof IMineContract.IView){
+
+                    IMineContract.IView iView= (IMineContract.IView) view;
+                    iView.onFindNewVersion(findNewVersionBean);
                 }
             }
         });

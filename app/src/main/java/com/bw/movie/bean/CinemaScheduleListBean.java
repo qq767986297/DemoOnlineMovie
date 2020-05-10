@@ -5,6 +5,11 @@ import java.util.List;
 public class CinemaScheduleListBean {
 
 
+    /**
+     * result : [{"director":"\r\n刘伟强","imageUrl":"http://mobile.bwstudent.com/images/movie/stills/zgjz/zgjz1.jpg","movieId":24,"name":"中国机长","score":9.4,"starring":"张涵予,欧豪,袁泉,张天爱,李沁","trailerUrl":"http://mobile.bwstudent.com/video/movie/zgjz/zgjz1.mp4"},{"director":"陈凯歌","imageUrl":"http://mobile.bwstudent.com/images/movie/stills/whwdzg/whwdzg1.jpg","movieId":23,"name":"我和我的祖国","score":9.7,"starring":"黄渤,张译,杜江,葛优,刘昊然,吴京","trailerUrl":"http://mobile.bwstudent.com/video/movie/whwdzg/whwdzg1.mp4"},{"director":"罗森·马歇尔·瑟伯","imageUrl":"http://mobile.bwstudent.com/images/movie/stills/mtyj/mtyj1.jpg","movieId":2,"name":"摩天营救","score":8.5,"starring":"道恩·强森,昆凌,文峰,黄经汉","trailerUrl":"http://mobile.bwstudent.com/video/movie/mtyj/mtyj1.ts"},{"director":"\r\n李仁港","imageUrl":"http://mobile.bwstudent.com/images/movie/stills/pdz/pdz1.jpg","movieId":25,"name":"攀登者","score":9.4,"starring":"吴京,章子怡,井柏然,胡歌","trailerUrl":"http://mobile.bwstudent.com/video/movie/pdz/pdz1.mp4"},{"director":"贾樟柯","imageUrl":"http://mobile.bwstudent.com/images/movie/stills/jhen/jhen1.jpg","movieId":19,"name":"江湖儿女","score":9.7,"starring":"赵涛,廖凡,徐峥,梁嘉艳","trailerUrl":"http://mobile.bwstudent.com/video/movie/jhen/jhen1.mp4"}]
+     * message : 查询成功
+     * status : 0000
+     */
 
     private String message;
     private String status;

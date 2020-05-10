@@ -72,5 +72,7 @@ dependencies {
     //头条适配
     implementation 'me.jessyan:autosize:1.2.1'
     implementation 'org.jetbrains:annotations-java5:15.0'
-
+    //头像上传
+    implementation 'com.github.wildma:PictureSelector:1.1.1'
+    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
 }

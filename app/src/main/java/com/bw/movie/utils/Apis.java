@@ -12,7 +12,11 @@ import com.bw.movie.bean.CinemaNearbyBean;
 import com.bw.movie.bean.CinemaRecommendBean;
 import com.bw.movie.bean.CinemaRegionBean;
 import com.bw.movie.bean.CinemaScheduleListBean;
+import com.bw.movie.bean.FindCinemasInfoByRegion;
 import com.bw.movie.bean.FindDataBean;
+import com.bw.movie.bean.FindMovieScheduleBean;
+import com.bw.movie.bean.FindNewVersionBean;
+import com.bw.movie.bean.FindSeatInfoBean;
 import com.bw.movie.bean.FollowMovieBean;
 import com.bw.movie.bean.HomeBannerBean;
 import com.bw.movie.bean.HomeHotMovieBean;
@@ -30,10 +34,13 @@ import com.bw.movie.bean.RegisterBean;
 import com.bw.movie.bean.SendEmailCodeBean;
 import com.bw.movie.bean.SystemMsgBean;
 import com.bw.movie.bean.SystemMsgChangeBean;
+import com.bw.movie.bean.UpLoadHeadPicBean;
 import com.bw.movie.bean.UserFeedBackBean;
 import com.bw.movie.bean.UserFollowMovieBean;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -151,7 +158,23 @@ public interface Apis {
     @GET("cinema/v2/findCinemaScheduleList")
     Observable<CinemaScheduleListBean>getCinemaSchedu(@Query("cinemaId")int cinemaId,@Query("page")int page,@Query("count")int count);
     //查询一周排期时间
-    @GET("movieApi/tool/v2/findDateList")
+    @GET("tool/v2/findDateList")
     Observable<FindDataBean>getFindData();
+    //根据电影id,区域id 查询播放影院信息
+    @GET("movie/v2/findCinemasInfoByRegion")
+    Observable<FindCinemasInfoByRegion> getCinemasInfoByRegion(@Query("movieId") int movieId, @Query("regionId") int regionId,
+                                                                @Query("page")int page, @Query("count")int count);
+    //根据影厅id 查询座位信息
+    @GET("movie/v2/findSeatInfo")
+    Observable<FindSeatInfoBean> getfindSeatInfo(@Query("hallId")int hallId);
+    //根据电影ID和影院ID查询电影排期列表
+    @GET("movie/v2/findMovieSchedule")
+    Observable<FindMovieScheduleBean> getfindMovieSchedule(@Query("movieId")int movieId, @Query("cinemaId")int cinemaId);
+    //头像上传
+    @POST("user/v1/verify/uploadHeadPic")
+    Observable<UpLoadHeadPicBean> getUpLoadHeadPicBean(@Body RequestBody body);
+    //查询新版本
+    @GET("tool/v1/findNewVersion")
+    Observable<FindNewVersionBean>getFindNewVersion();
 
 }

@@ -37,6 +37,8 @@ import com.bw.movie.utils.RetrofiManger;
 import com.bw.movie.utils.SPUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -149,6 +151,8 @@ public class MoviesDetailActivity extends BaseActivity implements IDetailContrac
                 startActivity(intent);
                 break;
             case R.id.bt_detail_buy:
+                Intent intent1 = new Intent(MoviesDetailActivity.this, SelectCinemaActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.iv_focus:
                 //点击关注
@@ -193,6 +197,7 @@ public class MoviesDetailActivity extends BaseActivity implements IDetailContrac
 
     @Override
     public void onDetailSuccess(MovieDetailBean movieDetailBean) {
+        EventBus.getDefault().postSticky(movieDetailBean);
         MovieDetailBean.ResultBean list = movieDetailBean.getResult();
         String imageUrl = list.getImageUrl();
         listName = list.getName();

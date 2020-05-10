@@ -11,6 +11,7 @@ import com.bw.movie.R;
 import com.bw.movie.adapter.MineFollowMovieAdapter;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.FindNewVersionBean;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.SystemMsgBean;
@@ -90,6 +91,11 @@ public class FragmentMineFollowMovie extends BaseFragment implements IMineContra
 
     @Override
     public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
+
+    }
+
+    @Override
+    public void onFindNewVersion(FindNewVersionBean findNewVersionBean) {
 
     }
 

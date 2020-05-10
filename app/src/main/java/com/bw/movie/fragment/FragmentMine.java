@@ -15,6 +15,7 @@ import com.bw.movie.R;
 import com.bw.movie.activity.MineCommentActivity;
 import com.bw.movie.activity.MineFollowActivity;
 import com.bw.movie.activity.MineOrderActivity;
+import com.bw.movie.activity.MineSettingActivity;
 import com.bw.movie.activity.SystemMsgActivity;
 import com.bw.movie.activity.UserFeedBackActivity;
 import com.bw.movie.activity.UserInfoActivity;
@@ -154,6 +155,8 @@ public class FragmentMine extends BaseFragment {
                 startActivity(intentFeedBack);
                 break;
             case R.id.iv_mine_setting:
+                Intent intentSetting = new Intent(getActivity(), MineSettingActivity.class);
+                startActivity(intentSetting);
                 break;
             case R.id.iv_mine_systemmsg:
                 Intent intentSystem = new Intent(getActivity(), SystemMsgActivity.class);

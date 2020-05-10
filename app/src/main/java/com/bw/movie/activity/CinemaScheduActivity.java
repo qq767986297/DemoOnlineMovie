@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bw.movie.R;
@@ -43,8 +44,9 @@ public class CinemaScheduActivity extends BaseActivity implements ICinemaContrac
     TabLayout tb;
     @BindView(R.id.vp_cinema_schedu)
     ViewPager vp;
-    private List<String> result;
+
     ArrayList<Fragment> list = new ArrayList<>();
+    ArrayList<String> data = new ArrayList<>();
     @Override
     protected BasePresenter initPresenter() {
         return new CinemaPresenter(this);
@@ -62,21 +64,34 @@ public class CinemaScheduActivity extends BaseActivity implements ICinemaContrac
 
     @Override
     protected void initData() {
-        for (int i=0;i<7;i++){
-            list.add(new FragmentSchedu());
-        }
-        MyViewPager pager = new MyViewPager(getSupportFragmentManager());
-        vp.setAdapter(pager);
-        tb.setupWithViewPager(vp);
         BasePresenter presenter = getPresenter();
         if(presenter instanceof ICinemaContract.IPresenter){
             (( ICinemaContract.IPresenter)presenter).getCinemaData();
         }
+
+
     }
 
     @Override
     public void onCinemaData(FindDataBean findDataBean) {
-        result = findDataBean.getResult();
+        List<String>  result = findDataBean.getResult();
+        data.addAll(result);
+        for (int i=0;i<result.size();i++){
+            list.add(new FragmentSchedu());
+            String s = result.get(i);
+            data.add(s);
+        }
+        tb.addTab(tb.newTab().setText(data.get(0)));
+        tb.addTab(tb.newTab().setText(data.get(1)));
+        tb.addTab(tb.newTab().setText(data.get(2)));
+        tb.addTab(tb.newTab().setText(data.get(3)));
+        tb.addTab(tb.newTab().setText(data.get(4)));
+        tb.addTab(tb.newTab().setText(data.get(5)));
+        tb.addTab(tb.newTab().setText(data.get(6)));
+        tb.addTab(tb.newTab().setText(data.get(7)));
+        MyViewPager pager = new MyViewPager(getSupportFragmentManager());
+        vp.setAdapter(pager);
+        tb.setupWithViewPager(vp);
 
     }
     public class MyViewPager extends FragmentPagerAdapter {
@@ -97,7 +112,7 @@ public class CinemaScheduActivity extends BaseActivity implements ICinemaContrac
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            return result.get(position);
+            return data.get(position);
         }
     }
     @Override

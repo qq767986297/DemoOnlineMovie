@@ -1,27 +1,41 @@
 package com.bw.movie.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.bean.LoginBean;
+import com.bw.movie.bean.UpLoadHeadPicBean;
+import com.bw.movie.utils.RetrofiManger;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.wildma.pictureselector.PictureSelector;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.RequestBody;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -70,6 +84,9 @@ public class UserInfoActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_mine_userinfo:
+                PictureSelector
+                        .create(this,PictureSelector.SELECT_REQUEST_CODE)
+                        .selectPicture(true,200,200,1,1);
                 break;
             case R.id.tv_mine_userinfo_name:
                 break;
@@ -79,6 +96,47 @@ public class UserInfoActivity extends BaseActivity {
                     break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK&&requestCode==PictureSelector.SELECT_REQUEST_CODE){
+            if (data != null) {
+                String stringExtra = data.getStringExtra(PictureSelector.PICTURE_PATH);
+                File file = new File(stringExtra);
+                ArrayList<File> files = new ArrayList<>();
+                files.add(file);
+                HashMap<String, String> map = new HashMap<>();
+                RequestBody requsetBody = RetrofiManger.getInstance().getRequsetBody(files, map);
+                RetrofiManger.getInstance().getApis().getUpLoadHeadPicBean(requsetBody)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<UpLoadHeadPicBean>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(UpLoadHeadPicBean upLoadHeadPicBean) {
+                                Toast.makeText(UserInfoActivity.this, ""+upLoadHeadPicBean.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        }
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void init(LoginBean loginBean) {
         LoginBean.ResultBean result = loginBean.getResult();

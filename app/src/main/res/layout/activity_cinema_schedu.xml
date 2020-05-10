@@ -24,7 +24,10 @@
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:id="@+id/tb_cinema_schedu"
+        app:tabIndicatorFullWidth="true"
         android:background="#1C2243"
+        app:tabMode="scrollable"
+        app:tabTextColor="@android:color/white"
         android:layout_below="@id/iv_cinema_schedu"
         android:layout_marginTop="23dp"
         android:layout_height="38dp"></android.support.design.widget.TabLayout>

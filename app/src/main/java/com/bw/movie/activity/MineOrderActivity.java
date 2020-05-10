@@ -9,6 +9,7 @@ import com.bw.movie.R;
 import com.bw.movie.adapter.MineOrderAdapter;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.FindNewVersionBean;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.SystemMsgBean;
@@ -84,6 +85,11 @@ public class MineOrderActivity extends BaseActivity implements IMineContract.IVi
 
     @Override
     public void onUserMovieComment(MineMovieCommentBean mineMovieCommentBean) {
+
+    }
+
+    @Override
+    public void onFindNewVersion(FindNewVersionBean findNewVersionBean) {
 
     }
 

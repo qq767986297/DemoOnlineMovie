@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bw.movie">
-
+    <!--8.0安装需要的权限-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -31,7 +32,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CinemaScheduActivity"></activity>
+        <activity android:name=".activity.NewVersionActivity"></activity>
+        <activity android:name=".activity.FindSeatInfoActivity" />
+        <activity android:name=".activity.MineResetPassWordActivity" />
+        <activity android:name=".activity.MineSettingActivity" />
+        <activity android:name=".activity.SelectCinemaSearchActivity" />
+        <activity android:name=".activity.SelectCinemaActivity" />
+        <activity android:name=".activity.CinemaScheduActivity" />
         <activity android:name=".activity.CinemaDetailActivity" />
         <activity android:name=".activity.MineCommentActivity" />
         <activity android:name=".activity.SystemMsgActivity" />

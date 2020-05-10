@@ -12,6 +12,7 @@ import com.bw.movie.R;
 import com.bw.movie.adapter.MineMovieCommentAdapter;
 import com.bw.movie.base.BaseFragment;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.FindNewVersionBean;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.SystemMsgBean;
@@ -68,6 +69,11 @@ public class FragmentMineCommentMovie extends BaseFragment implements IMineContr
         MineMovieCommentAdapter adapter = new MineMovieCommentAdapter(getActivity(), list);
         rv.setLayoutManager(manager);
         rv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFindNewVersion(FindNewVersionBean findNewVersionBean) {
+
     }
 
     @Override

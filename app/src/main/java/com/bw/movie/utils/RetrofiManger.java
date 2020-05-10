@@ -4,15 +4,23 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bw.movie.base.App;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -92,4 +100,18 @@ public class RetrofiManger {
             return chain.proceed(build);
         }
     }
+    public RequestBody getRequsetBody(List<File> files, HashMap<String,String> map){
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        for (Map.Entry<String,String> entry:map.entrySet()){
+            Log.i("xxx","key = "+entry.getKey()+"value = "+entry.getValue());
+            builder.addFormDataPart(entry.getKey(),entry.getValue()+"");
+        }
+
+        for (int i = 0; i <files.size(); i++){
+            builder.addFormDataPart("image",files.get(i).getName(),RequestBody.create(MediaType.parse("image/jepg"),files.get(i)));
+        }
+
+        return builder.build();
+    }
+
 }

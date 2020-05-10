@@ -2,6 +2,7 @@ package com.bw.movie.model;
 
 import android.util.Log;
 
+import com.bw.movie.bean.FindNewVersionBean;
 import com.bw.movie.bean.MineMovieCommentBean;
 import com.bw.movie.bean.MineOrderBean;
 import com.bw.movie.bean.SystemMsgBean;
@@ -188,6 +189,36 @@ public class MineModel implements IMineContract.IModel {
                     public void onNext(MineMovieCommentBean mineMovieCommentBean) {
                         if(iUserMovieCommentICallBack!=null){
                             iUserMovieCommentICallBack.onUserMovieComment(mineMovieCommentBean);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onGetFindNewVersion(final IFindNewVersionCallBack iFindNewVersionCallBack) {
+        RetrofiManger.getInstance().getApis().getFindNewVersion()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<FindNewVersionBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(FindNewVersionBean findNewVersionBean) {
+                        if(iFindNewVersionCallBack!=null){
+                            iFindNewVersionCallBack.onFindNewVersion(findNewVersionBean);
                         }
                     }
 

@@ -3,6 +3,7 @@ package com.bw.movie.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.bw.movie.bean.CinemaRegionBean;
 import com.bw.movie.bean.CinemaScheduleListBean;
 import com.bw.movie.bean.FindDataBean;
 import com.bw.movie.contract.ICinemaContract;
+import com.bw.movie.presenter.CinemaPresenter;
 import com.bw.movie.presenter.DetailPresenter;
 import com.bw.movie.utils.SPUtils;
 
@@ -44,7 +46,7 @@ public class FragmentSchedu extends BaseFragment implements ICinemaContract.IVie
 
     @Override
     protected BasePresenter initPresenter() {
-        return new DetailPresenter(this);
+        return new CinemaPresenter(this);
     }
 
     @Override
@@ -59,9 +61,10 @@ public class FragmentSchedu extends BaseFragment implements ICinemaContract.IVie
 
     @Override
     protected void initData() {
+        int cinemaId = SPUtils.getInt(getActivity(), "cinemaId", "cinemaId");
         BasePresenter presenter = getPresenter();
         if (presenter instanceof ICinemaContract.IPresenter) {
-            int cinemaId = SPUtils.getInt(getActivity(), "cinemaId", "cinemaId");
+            Log.i("III",""+cinemaId);
             ((ICinemaContract.IPresenter) presenter).getCinemaSchedu(cinemaId, 1, 10);
         }
     }
@@ -69,6 +72,7 @@ public class FragmentSchedu extends BaseFragment implements ICinemaContract.IVie
     @Override
     public void onCinemaSchedu(CinemaScheduleListBean cinemaScheduleListBean) {
         List<CinemaScheduleListBean.ResultBean> list = cinemaScheduleListBean.getResult();
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         CinemaScheduAdapter adapter = new CinemaScheduAdapter(getActivity(), list);
         rv.setLayoutManager(manager);
