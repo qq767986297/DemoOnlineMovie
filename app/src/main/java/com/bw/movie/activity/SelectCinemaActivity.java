@@ -13,6 +13,8 @@ import com.bw.movie.R;
 import com.bw.movie.adapter.SelectCinemaAdapter;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.AliPayBean;
+import com.bw.movie.bean.BuyTicketBean;
 import com.bw.movie.bean.FindCinemasInfoByRegion;
 import com.bw.movie.bean.FindMovieScheduleBean;
 import com.bw.movie.bean.FindSeatInfoBean;
@@ -139,6 +141,16 @@ public class SelectCinemaActivity extends BaseActivity implements ISelectContrac
 
     @Override
     public void onFindMovieSchedule(FindMovieScheduleBean findMovieScheduleBean) {
+
+    }
+
+    @Override
+    public void onBuyTicket(BuyTicketBean buyTicketBean) {
+
+    }
+
+    @Override
+    public void onPay(AliPayBean aliPayBean) {
 
     }
 

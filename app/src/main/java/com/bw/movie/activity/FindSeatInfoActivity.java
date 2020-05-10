@@ -3,23 +3,35 @@ package com.bw.movie.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.bw.movie.R;
 import com.bw.movie.adapter.FindMovieScheduleAdapter;
 import com.bw.movie.base.BaseActivity;
 import com.bw.movie.base.BasePresenter;
+import com.bw.movie.bean.AliPayBean;
+import com.bw.movie.bean.BuyTicketBean;
 import com.bw.movie.bean.FindCinemasInfoByRegion;
 import com.bw.movie.bean.FindMovieScheduleBean;
 import com.bw.movie.bean.FindSeatInfoBean;
+import com.bw.movie.contract.IPayContract;
 import com.bw.movie.contract.ISelectContract;
 import com.bw.movie.custom.SeatTable;
 import com.bw.movie.presenter.SelectPresenter;
+import com.bw.movie.utils.MD5;
 import com.bw.movie.utils.SPUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -28,14 +40,16 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FindSeatInfoActivity extends BaseActivity implements ISelectContract.IView {
+public class FindSeatInfoActivity extends BaseActivity implements ISelectContract.IView{
 
 
+    private static final int SDK_PAY_FLAG = 1;
     @BindView(R.id.iv_fh)
     ImageView iv;
     @BindView(R.id.tv_name)
@@ -48,15 +62,28 @@ public class FindSeatInfoActivity extends BaseActivity implements ISelectContrac
     Button bt_pay;
     @BindView(R.id.iv_ym)
     SimpleDraweeView ivbg;
+    @BindView(R.id.rb_wechat)
+    RadioButton rbWechat;
+    @BindView(R.id.rb_ali)
+    RadioButton rbAli;
+    @BindView(R.id.rg)
+    RadioGroup rg;
+    @BindView(R.id.rl_pay)
+    RelativeLayout rlPay;
+
     private int movieId;
     private double fare;
     private int hallId;
     private String hall;
     String a;
+    int i = 1;
+    int flag;
+    private String jia;
 
     @Override
     protected BasePresenter initPresenter() {
         return new SelectPresenter(this);
+
     }
 
     @Override
@@ -66,7 +93,9 @@ public class FindSeatInfoActivity extends BaseActivity implements ISelectContrac
 
     @Override
     protected void initView() {
-
+            String str="139461movie";
+        jia = MD5.jia(str);
+        Log.i("MD5", jia +"");
     }
 
     @Override
@@ -172,6 +201,7 @@ public class FindSeatInfoActivity extends BaseActivity implements ISelectContrac
 
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,12 +216,80 @@ public class FindSeatInfoActivity extends BaseActivity implements ISelectContrac
                 finish();
                 break;
             case R.id.bt_xz:
+                i++;
+                if (i % 2 == 0) {
+                    rlPay.setVisibility(View.VISIBLE);
+                    rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                            if(rbWechat.getId()==checkedId){
+                                bt_pay.setText("微信支付"+fare+"元");
+                                flag=1;
+                            }
+                            if(rbAli.getId()==checkedId){
+                                bt_pay.setText("支付宝支付"+fare+"元");
+
+                                flag=2;
+                            }
+                        }
+                    });
+                } else if(i%2!=0){
+                        //如果=1,则调用微信支付
+                    if(flag==1){
+//                        BasePresenter presenter = getPresenter();
+//                        if(presenter instanceof IPayContract.IPresenter){
+//                            ((IPayContract.IPresenter)presenter).getBuyTicket(1,a,jia);
+                        Toast.makeText(this, "微信支付", Toast.LENGTH_SHORT).show();
+//                        }
+                    }else {
+                        //如果=2,则调用支付宝支付
+                        Toast.makeText(this, "支付宝支付", Toast.LENGTH_SHORT).show();
+                        BasePresenter presenter = getPresenter();
+                        if(presenter instanceof ISelectContract.IPresenter){
+                            ((ISelectContract.IPresenter)presenter).getBuyTicket(1,a,jia);
+                        }
+                    }
+                }
                 break;
             default:
                 break;
         }
     }
+    //电影票下单
+    @Override
+    public void onBuyTicket(BuyTicketBean buyTicketBean) {
+        String orderId = buyTicketBean.getOrderId();
+        String message = buyTicketBean.getMessage();
+        Toast.makeText(this, ""+message, Toast.LENGTH_SHORT).show();
+        BasePresenter presenter = getPresenter();
+        if(presenter instanceof ISelectContract.IPresenter){
+            ((ISelectContract.IPresenter)presenter).getPay(2,orderId);
+        }
+    }
+    Handler handler=new Handler();
+    //支付
+    @Override
+    public void onPay(AliPayBean aliPayBean) {
+        String message = aliPayBean.getMessage();
+        String result = aliPayBean.getResult();
+        final String orderInfo = result;   // 订单信息
 
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(FindSeatInfoActivity.this);
+                Map<String,String> result = alipay.payV2(orderInfo,true);
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                handler.sendMessage(msg);
+            }
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
     @Override
     public void onCinemaByRegion(FindCinemasInfoByRegion findCinemasInfoByRegion) {
 
@@ -202,4 +300,5 @@ public class FindSeatInfoActivity extends BaseActivity implements ISelectContrac
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
 }

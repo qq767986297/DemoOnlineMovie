@@ -1,5 +1,7 @@
 package com.bw.movie.model;
 
+import com.bw.movie.bean.AliPayBean;
+import com.bw.movie.bean.BuyTicketBean;
 import com.bw.movie.bean.FindCinemasInfoByRegion;
 import com.bw.movie.bean.FindMovieScheduleBean;
 import com.bw.movie.bean.FindSeatInfoBean;
@@ -94,6 +96,66 @@ public class SelectModel implements ISelectContract.IModel {
                     public void onNext(FindMovieScheduleBean findMovieScheduleBean) {
                         if(iFindMovieScheduleCallBack!=null){
                             iFindMovieScheduleCallBack.onFindMovieSchedule(findMovieScheduleBean);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onGetBuyTicket(int scheduleId, String seat, String sign, final IBuyTicketCallBack iBuyTicketCallBack) {
+        RetrofiManger.getInstance().getApis().getBuyTicket(scheduleId, seat, sign)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BuyTicketBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BuyTicketBean buyTicketBean) {
+                        if(iBuyTicketCallBack!=null){
+                            iBuyTicketCallBack.onBuyTicket(buyTicketBean);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onGetPay(int payType, String orderId, final IPayCallBack iPayCallBack) {
+        RetrofiManger.getInstance().getApis().getPay(payType, orderId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<AliPayBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(AliPayBean aliPayBean) {
+                        if(iPayCallBack!=null){
+                            iPayCallBack.onPay(aliPayBean);
                         }
                     }
 

@@ -2,6 +2,8 @@ package com.bw.movie.presenter;
 
 import com.bw.movie.base.BasePresenter;
 import com.bw.movie.base.IBaseView;
+import com.bw.movie.bean.AliPayBean;
+import com.bw.movie.bean.BuyTicketBean;
 import com.bw.movie.bean.FindCinemasInfoByRegion;
 import com.bw.movie.bean.FindMovieScheduleBean;
 import com.bw.movie.bean.FindSeatInfoBean;
@@ -63,6 +65,34 @@ public class SelectPresenter extends BasePresenter implements ISelectContract.IP
                 if(view instanceof ISelectContract.IView){
                     ISelectContract.IView iView= (ISelectContract.IView) view;
                     iView.onFindMovieSchedule(findMovieScheduleBean);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getBuyTicket(int scheduleId, String seat, String sign) {
+        model.onGetBuyTicket(scheduleId, seat, sign, new ISelectContract.IModel.IBuyTicketCallBack() {
+            @Override
+            public void onBuyTicket(BuyTicketBean buyTicketBean) {
+                IBaseView view = getView();
+                if(view instanceof ISelectContract.IView){
+                    ISelectContract.IView iView= (ISelectContract.IView) view;
+                    iView.onBuyTicket(buyTicketBean);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getPay(int payType, String orderId) {
+        model.onGetPay(payType, orderId, new ISelectContract.IModel.IPayCallBack() {
+            @Override
+            public void onPay(AliPayBean aliPayBean) {
+                IBaseView view = getView();
+                if(view instanceof ISelectContract.IView){
+                    ISelectContract.IView iView= (ISelectContract.IView) view;
+                    iView.onPay(aliPayBean);
                 }
             }
         });

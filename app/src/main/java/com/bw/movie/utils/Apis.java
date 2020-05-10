@@ -1,6 +1,8 @@
 package com.bw.movie.utils;
 
 import com.bw.movie.bean.AddMovieCommentBean;
+import com.bw.movie.bean.AliPayBean;
+import com.bw.movie.bean.BuyTicketBean;
 import com.bw.movie.bean.CancelFollowMovieBean;
 import com.bw.movie.bean.CinemaCanelFollowBean;
 import com.bw.movie.bean.CinemaCommentGoodBean;
@@ -176,5 +178,12 @@ public interface Apis {
     //查询新版本
     @GET("tool/v1/findNewVersion")
     Observable<FindNewVersionBean>getFindNewVersion();
-
+    //电影票下单
+    @POST("movie/v2/verify/buyMovieTickets")
+    @FormUrlEncoded
+    Observable<BuyTicketBean>getBuyTicket(@Field("scheduleId")int scheduleId,@Field("seat")String seat,@Field("sign")String sign);
+    //支付
+    @POST("movie/v2/verify/pay")
+    @FormUrlEncoded
+    Observable<AliPayBean>getPay(@Field("payType")int payType,@Field("orderId")String orderId);
 }

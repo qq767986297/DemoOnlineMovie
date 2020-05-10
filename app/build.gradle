@@ -75,4 +75,6 @@ dependencies {
     //头像上传
     implementation 'com.github.wildma:PictureSelector:1.1.1'
     implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
+    //支付宝支付
+    implementation (name: 'alipaySdk-15.7.5-20200422171619', ext: 'aar')
 }
